@@ -1,0 +1,323 @@
+	
+Label Root
+{
+	Son: market
+	Label market
+	{
+		Son: bank
+		Label bank
+		{
+			Param: _IDb
+			Var: _NWb
+			Var: _levb
+			Var: _loanb
+			Var: new_loanb
+			Var: max_loanb
+
+		}
+
+		Son: firm
+		Label firm
+		{
+			Son: CliB
+			Label CliB
+			{
+				Param: IDb
+				Var: levb
+
+			}
+
+			Param: _IDf
+			Var: _levf
+			Var: _loanf
+			Var: _NWf
+			Var: _tlev
+			Var: max_loanf
+			Var: new_loanf
+			Var: up_setBanks
+
+		}
+
+		Param: B
+		Param: fsig
+		Var: setBanks
+		Var: cred_mkt
+		Var: totLoanB
+		Var: totLoanF
+		Param: kreq
+
+	}
+
+
+}
+
+
+DATA
+
+Object: Root C	1
+
+Object: market C	1
+Param: B 0 n + n n	5
+Param: fsig 0 n + n n	0.4
+Var: setBanks 0 n + d n
+Var: cred_mkt 0 n + n n
+Var: totLoanB 0 n + n n
+Var: totLoanF 0 n + n n
+Param: kreq 0 n + n n	5
+
+Object: bank C	5
+Param: _IDb 0 n + n n	1	2	3	4	5
+Var: _NWb 1 s + n n	5.73364174250333	9.69238524895137	5.96172259167907	14.0337017138806	6.1949047383102
+Var: _levb 0 s + n n
+Var: _loanb 1 n + n n	57.2093346579163	49.9107604423539	30.6619498224534	58.0972516495886	92.2565820301748
+Var: new_loanb 0 n + n n
+Var: max_loanb 0 n + n n
+
+Object: firm C	5
+Param: _IDf 0 n + n n	1	2	3	4	5
+Var: _levf 0 n + n n
+Var: _loanf 1 n + n n	33.0481451660433	19.6032875186876	37.7605238121395	28.5231481243572	38.1565158126755
+Var: _NWf 1 n + n n	25.5742164174511	24.3814356602125	47.2607507734367	40.0275155992514	37.2186729966275
+Var: _tlev 1 n + n n	1.13547700429678	1.83500858999458	1.96886777112423	1.2210340429827	1.308167050507
+Var: max_loanf 0 n + n n
+Var: new_loanf 1 n + n n	0	0	0	0	0
+Var: up_setBanks 0 n + n n
+
+Object: CliB C	1	1	1	1	1
+Param: IDb 0 n + n n	0	0	0	0	0
+Var: levb 0 n + n n
+
+SIM_NUM 1
+SEED 1
+MAX_STEP 1
+EQUATION fun_creditmarket.cpp
+MODELREPORT report_Sim1.html
+
+DESCRIPTION
+
+Object_Root
+(no description available)
+END_DESCRIPTION
+
+Object_market
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_B
+number of banks
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_fsig
+fraction of banks to be approached by firms
+_INIT_
+
+END_DESCRIPTION
+
+Variable_setBanks
+choose the set of banks the firm will apply for credit
+_INIT_
+
+END_DESCRIPTION
+
+Variable_cred_mkt
+set the loans from banks to firms
+_INIT_
+
+END_DESCRIPTION
+
+Variable_totLoanB
+Total banks loan
+_INIT_
+
+END_DESCRIPTION
+
+Variable_totLoanF
+Total firms loan
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_kreq
+maximum banks' leverage
+_INIT_
+All 1 instances equal to 10.
+END_DESCRIPTION
+
+Object_bank
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter__IDb
+bank ID
+_INIT_
+All 20 instances increasing from 1 with steps 1. The value is increased every 1 instances.
+END_DESCRIPTION
+
+Variable__NWb
+bank's net worth
+_INIT_
+All 5 instances set to random values drawn from a uniform in the range [5,15].
+END_DESCRIPTION
+
+Variable__levb
+individual bank leverage
+_INIT_
+All 20 instances set to random values drawn from a uniform in the range [0.5,3].
+END_DESCRIPTION
+
+Variable__loanb
+individual bank loans
+_INIT_
+All 5 instances set to random values drawn from a uniform in the range [10,100].
+END_DESCRIPTION
+
+Variable_new_loanb
+(no description available)
+_INIT_
+All 5 instances equal to 0.
+END_DESCRIPTION
+
+Variable_max_loanb
+Maximum loan by bank in period
+
+
+END_DESCRIPTION
+
+Object_firm
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter__IDf
+(no description available)
+_INIT_
+All 5 instances increasing from 1 with step 1.
+END_DESCRIPTION
+
+Variable__levf
+individual firm leverage
+_INIT_
+All 5 instances set ranging from 0.5 to 5 (i.e. increments of 1.125).
+END_DESCRIPTION
+
+Variable__loanf
+individual firm loans
+_INIT_
+All 5 instances set to random values drawn from a uniform in the range [5,50].
+END_DESCRIPTION
+
+Variable__NWf
+individual firm net worth
+_INIT_
+All 5 instances set to random values drawn from a uniform in the range [5,50].
+END_DESCRIPTION
+
+Variable__tlev
+individual firm target leverage
+_INIT_
+All 5 instances set to random values drawn from a uniform in the range [1,2].
+END_DESCRIPTION
+
+Variable_max_loanf
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_new_loanf
+(no description available)
+_INIT_
+All 5 instances equal to 0.
+END_DESCRIPTION
+
+Variable_up_setBanks
+update the set of target banks
+_INIT_
+
+END_DESCRIPTION
+
+Object_CliB
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_IDb
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_levb
+(no description available)
+_INIT_
+All 5 instances equal to 0.
+END_DESCRIPTION
+
+
+DOCUOBSERVE
+
+END_DOCUOBSERVE
+
+
+DOCUINITIAL
+
+END_DOCUINITIAL
+
+
+EQ_FILE
+//#define EIGENLIB			// uncomment to use Eigen linear algebra library
+//#define NO_POINTER_INIT	// uncomment to disable pointer checking
+
+#include "fun_head_fast.h"
+
+// do not add Equations in this area
+
+MODELBEGIN
+
+EQUATION("_range")
+
+i = 0;											// bank index in vector
+v[1] = 0;										// cumulative banks' net worth
+CYCLE( cur, "Bank" )							// do for all banks
+{
+	v[1] += V("_NWb");
+	++i;
+}
+
+// rescale the net worth to 1 and accumulate them
+//for ( v[2] = 0, j = 0; j < i; ++j )
+//{
+//	v[2] += V_EXTS( PARENT, country, bankwgtd [ j ] ) / v[1];
+//	WRITE_EXTS( PARENT, country, bankwgtd[ j ], min( v[2], 1 ) );
+//}
+
+RESULT( v[1] )
+
+
+
+
+
+
+
+
+
+
+
+MODELEND
+
+// do not add Equations in this area
+
+void close_sim( void )
+{
+	// close simulation special commands go here
+}
+
+END_EQ_FILE

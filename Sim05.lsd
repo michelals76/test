@@ -1,0 +1,251 @@
+	
+Label Root
+{
+	Son: market
+	Label market
+	{
+		Son: bank
+		Label bank
+		{
+			Var: _NWb
+			Param: _IDb
+			Var: _levb
+
+		}
+
+		Son: firm
+		Label firm
+		{
+			Son: CliB
+			Label CliB
+			{
+				Param: IDb
+				Param: levb
+
+			}
+
+			Var: lev_perc
+			Var: avg_lev
+			Var: up_lev
+			Var: minCliB
+			Var: maxCliB
+			Var: aveCliB
+
+		}
+
+		Param: B
+		Param: fsig
+		Var: setBanks
+
+	}
+
+
+}
+
+
+DATA
+
+Object: Root C	1
+
+Object: market C	1
+Param: B 0 n + n n	5
+Param: fsig 0 n + n n	0.4
+Var: setBanks 0 n + n n
+
+Object: bank C	5
+Var: _NWb 0 s + n n
+Param: _IDb 0 n + n n	1	2	3	4	5
+Var: _levb 1 s + n n	0.838692510741951	2.58752147498645	2.92216942781058	1.05258510745676	1.27041762626751
+
+Object: firm C	5
+Var: lev_perc 0 n + n n
+Var: avg_lev 0 s + n n
+Var: up_lev 0 s + n n
+Var: minCliB 0 s + n n
+Var: maxCliB 0 s + n n
+Var: aveCliB 0 s + n n
+
+Object: CliB C	1	1	1	1	1
+Param: IDb 0 n + n n	0	0	0	0	0
+Param: levb 0 n + n n	0	0	0	0	0
+
+SIM_NUM 1
+SEED 1
+MAX_STEP 100
+EQUATION fun_creditmarket.cpp
+MODELREPORT report_Sim1.html
+
+DESCRIPTION
+
+Object_Root
+(no description available)
+END_DESCRIPTION
+
+Object_market
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_B
+number of banks
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_fsig
+fraction of banks to be approached by firms
+_INIT_
+
+END_DESCRIPTION
+
+Variable_setBanks
+choose the set of banks the firm will apply for credit
+_INIT_
+
+END_DESCRIPTION
+
+Object_bank
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable__NWb
+bank's net worth
+_INIT_
+All 10 instances set ranging from 0.1 to 10 (i.e. increments of 1.1).
+END_DESCRIPTION
+
+Parameter__IDb
+bank ID
+_INIT_
+All 20 instances increasing from 1 with steps 1. The value is increased every 1 instances.
+END_DESCRIPTION
+
+Variable__levb
+individual bank leverage
+_INIT_
+All 20 instances set to random values drawn from a uniform in the range [0.5,3].
+END_DESCRIPTION
+
+Object_firm
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_lev_perc
+index of x% banks with highest leverage
+_INIT_
+
+END_DESCRIPTION
+
+Variable_avg_lev
+average leverage
+_INIT_
+
+END_DESCRIPTION
+
+Variable_up_lev
+update the leverage value
+_INIT_
+
+END_DESCRIPTION
+
+Variable_minCliB
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_maxCliB
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_aveCliB
+max. ID of ClilB
+_INIT_
+
+END_DESCRIPTION
+
+Object_CliB
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_IDb
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Parameter_levb
+(no description available)
+_INIT_
+All 5 instances equal to 0.
+END_DESCRIPTION
+
+
+DOCUOBSERVE
+
+END_DOCUOBSERVE
+
+
+DOCUINITIAL
+
+END_DOCUINITIAL
+
+
+EQ_FILE
+//#define EIGENLIB			// uncomment to use Eigen linear algebra library
+//#define NO_POINTER_INIT	// uncomment to disable pointer checking
+
+#include "fun_head_fast.h"
+
+// do not add Equations in this area
+
+MODELBEGIN
+
+EQUATION("_range")
+
+i = 0;											// bank index in vector
+v[1] = 0;										// cumulative banks' net worth
+CYCLE( cur, "Bank" )							// do for all banks
+{
+	v[1] += V("_NWb");
+	++i;
+}
+
+// rescale the net worth to 1 and accumulate them
+//for ( v[2] = 0, j = 0; j < i; ++j )
+//{
+//	v[2] += V_EXTS( PARENT, country, bankwgtd [ j ] ) / v[1];
+//	WRITE_EXTS( PARENT, country, bankwgtd[ j ], min( v[2], 1 ) );
+//}
+
+RESULT( v[1] )
+
+
+
+
+
+
+
+
+
+
+
+MODELEND
+
+// do not add Equations in this area
+
+void close_sim( void )
+{
+	// close simulation special commands go here
+}
+
+END_EQ_FILE
