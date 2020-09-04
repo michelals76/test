@@ -27,6 +27,14 @@ Label Root
 
 			}
 
+			Son: cred
+			Label cred
+			{
+				Var: value
+				Var: period
+
+			}
+
 			Param: _IDf
 			Var: _levf
 			Var: _loanf
@@ -35,6 +43,7 @@ Label Root
 			Var: max_loanf
 			Var: new_loanf
 			Var: up_setBanks
+			Var: up_cred
 
 		}
 
@@ -45,6 +54,7 @@ Label Root
 		Var: totLoanB
 		Var: totLoanF
 		Param: kreq
+		Param: nper
 
 	}
 
@@ -63,11 +73,12 @@ Var: setBanks 0 n + d n
 Var: cred_mkt 0 n + n n
 Var: totLoanB 0 n + n n
 Var: totLoanF 0 n + n n
-Param: kreq 0 n + n n	5
+Param: kreq 0 n + n n	10
+Param: nper 0 n + n n	10
 
 Object: bank C	5
 Param: _IDb 0 n + n n	1	2	3	4	5
-Var: _NWb 1 s + n n	5.73364174250333	9.69238524895137	5.96172259167907	14.0337017138806	6.1949047383102
+Var: _NWb 1 s + n n	5.6773850214839	9.1750429499729	9.84433885562116	6.10517021491352	6.54083525253502
 Var: _levb 0 s + n n
 Var: _loanb 1 n + n n	57.2093346579163	49.9107604423539	30.6619498224534	58.0972516495886	92.2565820301748
 Var: new_loanb 0 n + n n
@@ -82,14 +93,19 @@ Var: _tlev 1 n + n n	1.13547700429678	1.83500858999458	1.96886777112423	1.221034
 Var: max_loanf 0 n + n n
 Var: new_loanf 1 n + n n	0	0	0	0	0
 Var: up_setBanks 0 n + n n
+Var: up_cred 0 n + n n
 
 Object: CliB C	1	1	1	1	1
 Param: IDb 0 n + n n	0	0	0	0	0
 Var: levb 0 n + n n
 
+Object: cred C	1	1	1	1	1
+Var: value 0 s + n n
+Var: period 0 n + n n
+
 SIM_NUM 1
 SEED 1
-MAX_STEP 1
+MAX_STEP 5
 EQUATION fun_creditmarket.cpp
 MODELREPORT report_Sim1.html
 
@@ -147,6 +163,12 @@ _INIT_
 All 1 instances equal to 10.
 END_DESCRIPTION
 
+Parameter_nper
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
 Object_bank
 (no description available)
 _INIT_
@@ -162,7 +184,7 @@ END_DESCRIPTION
 Variable__NWb
 bank's net worth
 _INIT_
-All 5 instances set to random values drawn from a uniform in the range [5,15].
+All 5 instances set to random values drawn from a uniform in the range [5,10].
 END_DESCRIPTION
 
 Variable__levb
@@ -185,7 +207,7 @@ END_DESCRIPTION
 
 Variable_max_loanb
 Maximum loan by bank in period
-
+_INIT_
 
 END_DESCRIPTION
 
@@ -243,6 +265,12 @@ _INIT_
 
 END_DESCRIPTION
 
+Variable_up_cred
+delete credit contracts (obj. "cred") with value equal to zero
+_INIT_
+
+END_DESCRIPTION
+
 Object_CliB
 (no description available)
 _INIT_
@@ -259,6 +287,24 @@ Variable_levb
 (no description available)
 _INIT_
 All 5 instances equal to 0.
+END_DESCRIPTION
+
+Object_cred
+(no description available)
+_INIT_
+
+END_DESCRIPTION
+
+Variable_value
+update credit value
+_INIT_
+
+END_DESCRIPTION
+
+Variable_period
+update credit period
+_INIT_
+
 END_DESCRIPTION
 
 
